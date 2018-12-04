@@ -1,8 +1,8 @@
 # ------------------------------------------------------------------------
 #
 # Indicators R-Script
-# Autoren: Engelen & Kuschnig
-# Datum: 2018-11-08
+# Autoren: Lasser & Reiter
+# Datum: 
 #
 # -------------------------------------------------------------------------
 
@@ -10,12 +10,12 @@ library(dplyr)
 library(survey)
 library(convey)
 
-country <- "CZ"
-year <- 2013
+country <- "IE"
+year <- seq(2004, 2013, 1)
 
 # Source the Setup scripts to provide merged household and personal data
-source("R/_connection.R")
-source("R/_setup.R")
+source("reports/IRL/Scripts_IRL/_connection.R")
+source("reports/IRL/Scripts_IRL/_setup_IRL.R")
 
 
 # Subsetting --------------------------------------------------------------
