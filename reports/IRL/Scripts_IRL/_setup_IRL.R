@@ -73,9 +73,11 @@ silc.r <- silc.r %>% mutate(id_h = paste0(rb020, rx030))
 
 
 # Merge the datasets
-silc.pd <- left_join(silc.p, silc.d %>% select(id_h, db020, db090))
+silc.pd <- left_join(silc.p, silc.d %>% select(id_h, db010, db020, db040, db090)
+                     , by = c('id_h'='id_h', 'pb010'='db010'))
 
-silc.hd <- left_join(silc.h, silc.d)
+silc.hd <- left_join(silc.h, silc.d %>% select(id_h, db010, db020, db040, db090)
+                     , by = c('id_h' = 'id_h', 'hb010'='db010'))
 
 
 # Create total personal income --------------------------------------------
