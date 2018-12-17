@@ -18,8 +18,8 @@ silc.p <- tbl(pg, "pp") %>%
 
 silc.h <- tbl(pg, "hh") %>%
   filter(hb020 %in% country & hb010 %in% year) %>%
-  select(hb010, hb020, hb030, hy010, hy040g, hy050g, hy060g, hy070g, hy080g, 
-         hy090g, hy110g, hy120g, hy130g, hy140g, hx010) %>%
+  select(hb010, hb020, hb030, hy010, hy020, hy040g, hy050g, hy060g, hy070g, hy080g, 
+         hy090g, hy110g, hy120g, hy130g, hy140g, hx010, hx050) %>%
   collect(n = Inf)
 
 silc.d <- tbl(pg, "dd") %>%
@@ -96,20 +96,20 @@ silc.p <- bind_rows(silc.p, cyyp)
 
 c14h <- tbl(pg, "c14h") %>%
   filter(hb020 %in% country) %>%
-  select(hb010, hb020, hb030, hy010, hy040g, hy050g, hy060g, hy070g, hy080g, 
-         hy090g, hy110g, hy120g, hy130g, hy140g, hx010) %>%
+  select(hb010, hb020, hb030, hy010, hy020, hy040g, hy050g, hy060g, hy070g, hy080g, 
+         hy090g, hy110g, hy120g, hy130g, hy140g, hx010, hx050) %>%
   collect(n = Inf)
 
 c15h <- tbl(pg, "c15h") %>%
   filter(hb020 %in% country) %>%
-  select(hb010, hb020, hb030, hy010, hy040g, hy050g, hy060g, hy070g, hy080g, 
-         hy090g, hy110g, hy120g, hy130g, hy140g, hx010) %>%
+  select(hb010, hb020, hb030, hy010, hy020, hy040g, hy050g, hy060g, hy070g, hy080g, 
+         hy090g, hy110g, hy120g, hy130g, hy140g, hx010, hx050) %>%
   collect(n = Inf)
 
 c16h <- tbl(pg, "c16h") %>%
   filter(hb020 %in% country) %>%
-  select(hb010, hb020, hb030, hy010, hy040g, hy050g, hy060g, hy070g, hy080g, 
-         hy090g, hy110g, hy120g, hy130g, hy140g, hx010) %>%
+  select(hb010, hb020, hb030, hy010, hy020, hy040g, hy050g, hy060g, hy070g, hy080g, 
+         hy090g, hy110g, hy120g, hy130g, hy140g, hx010, hx050) %>%
   collect(n = Inf)
 
 cyyh <- bind_rows(c14h, c15h, c16h)
