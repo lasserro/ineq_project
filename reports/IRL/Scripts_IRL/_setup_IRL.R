@@ -186,6 +186,19 @@ silc.hd <- left_join(silc.h, silc.d %>% select(id_h, db010, db020, db040, db090)
 
 rm(cxxp, cyyp, cyyh, cyyd, cyyr)
 
+
+# create car variable for later use: combine py020g & py021g 
+int1 <- seq(2004,2006,1)
+int2 <- seq(2007,2016,1)
+df1 <- silc.pd %>% filter(pb010 %in% int1)
+df2 <- silc.pd %>% filter(pb010 %in% int2)
+
+df1$car <- df1$py020g
+df2$car <- df2$py021g
+
+silc.pd <- bind_rows(df1,df2)
+rm(int1,int2,df1,df2)
+
 # Create total personal income --------------------------------------------
 
 # Find string "py" (i.e. income variables) for summing up total personal income. 
