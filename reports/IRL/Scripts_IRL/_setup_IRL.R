@@ -29,7 +29,7 @@ silc.d <- tbl(pg, "dd") %>%
 
 silc.r <- tbl(pg, "rr") %>% 
   filter(rb020 %in% country & rb010 %in% year) %>%
-  select(rb010, rb020, rb030, rb050, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
   collect(n = Inf)
 
 # Download c[YY]p tables 2007 - 2013:
@@ -146,17 +146,17 @@ silc.d <- bind_rows(silc.d, cyyd)
 
 c14r <- tbl(pg, "c14r") %>% 
   filter(rb020 %in% country) %>%
-  select(rb010, rb020, rb030, rb050, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
   collect(n = Inf)
 
 c15r <- tbl(pg, "c15r") %>% 
   filter(rb020 %in% country) %>%
-  select(rb010, rb020, rb030, rb050, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
   collect(n = Inf)
 
 c16r <- tbl(pg, "c16r") %>% 
   filter(rb020 %in% country) %>%
-  select(rb010, rb020, rb030, rb050, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
   collect(n = Inf)
 
 cyyr <- bind_rows(c14r, c15r, c16r)
