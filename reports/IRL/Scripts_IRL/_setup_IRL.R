@@ -203,12 +203,19 @@ int1 <- seq(2004,2006,1)
 int2 <- seq(2007,2016,1)
 df1 <- silc.pd %>% filter(pb010 %in% int1)
 df2 <- silc.pd %>% filter(pb010 %in% int2)
-
 df1$car <- df1$py020g
 df2$car <- df2$py021g
 
 silc.pd <- bind_rows(df1,df2)
-rm(int1,int2,df1,df2)
+
+df3 <- silc.rp %>% filter(rb010 %in% int1)
+df4 <- silc.rp %>% filter(rb010 %in% int2)
+df3$car <- df3$py020g
+df4$car <- df4$py020g
+
+silc.rp <- bind_rows(df3,df4)
+
+rm(int1,int2,df1,df2, df3, df4)
 
 # Create total personal income --------------------------------------------
 
