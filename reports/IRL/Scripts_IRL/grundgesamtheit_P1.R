@@ -84,4 +84,6 @@ summary(silc.rph$hy020a_round0==silc.rph$income_p13_round0)
 # it is almost. good enough for me... 3/4 der Werte stimmen exakt, der Rest wsl
 # nur minimaler Unterschied, könnte man noch überprüfen mit Hilfe von Intervallen?
 
+# all.equal(silc.rph$hy020a, silc.rph$income_p13)
+
 
