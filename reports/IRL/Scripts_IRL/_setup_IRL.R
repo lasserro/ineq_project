@@ -31,7 +31,7 @@ silc.d <- tbl(pg, "dd") %>%
 
 silc.r <- tbl(pg, "rr") %>% 
   filter(rb020 %in% country & rb010 %in% year) %>%
-  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rb090, rx010, rx030) %>%
   collect(n = Inf)
 
 ############################################################################
@@ -149,17 +149,17 @@ silc.d <- bind_rows(silc.d, cyyd)
 
 c14r <- tbl(pg, "c14r") %>% 
   filter(rb020 %in% country) %>%
-  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rb090, rx010, rx030) %>%
   collect(n = Inf)
 
 c15r <- tbl(pg, "c15r") %>% 
   filter(rb020 %in% country) %>%
-  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rb090, rx010, rx030) %>%
   collect(n = Inf)
 
 c16r <- tbl(pg, "c16r") %>% 
   filter(rb020 %in% country) %>%
-  select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
+  select(rb010, rb020, rb030, rb050, rb090, rx010, rx030) %>%
   collect(n = Inf)
 
 cyyr <- bind_rows(c14r, c15r, c16r)
@@ -173,15 +173,15 @@ silc.r <- bind_rows(silc.r, cyyr)
 ######################### 4. Merging ######################################
 
 ### 4.1 Create unique IDs for merging
-silc.p <- silc.p %>% mutate(id_h = paste0(pb020, px030)) %>%
-                     mutate(id_p = paste0(pb020, pb030))
+silc.p <- silc.p %>% mutate(id_h = paste0(pb020, px030), 
+                            id_p = paste0(pb020, pb030))
 
 silc.h <- silc.h %>% mutate(id_h = paste0(hb020, hb030))
 
 silc.d <- silc.d %>% mutate(id_h = paste0(db020, db030))
 
-silc.r <- silc.r %>% mutate(id_h = paste0(rb020, rx030)) %>% 
-                     mutate(id_p = paste0(rb020, rb030))
+silc.r <- silc.r %>% mutate(id_h = paste0(rb020, rx030), 
+                            id_p = paste0(rb020, rb030)) 
 
 ### 4.2 Merge the datasets
 silc.pd <- left_join(silc.p, silc.d %>% select(id_h, db010, db020, db040, db090)
