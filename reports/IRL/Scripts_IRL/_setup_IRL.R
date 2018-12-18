@@ -8,7 +8,9 @@ if(!exists(c("country", "year"))) {
 
 # Prepare Data ------------------------------------------------------------
 
-# Download data
+###########################################################################
+################ 1. Prepare data for 'year' ##############################
+
 silc.p <- tbl(pg, "pp") %>%
   filter(pb020 %in% country & pb010 %in% year) %>%
   select(pb010, pb020, pb030, pb040, pb150, py010g, py020g, py050g, py050n, 
@@ -32,7 +34,8 @@ silc.r <- tbl(pg, "rr") %>%
   select(rb010, rb020, rb030, rb050, rx010, rx030) %>%
   collect(n = Inf)
 
-# Download c[YY]p tables 2007 - 2013:
+############################################################################
+############ 2. Download c[YY]p tables 2007 - 2013: #######################
 c07p <- tbl(pg, "c07p") %>% filter(pb020 %in% country) %>% select(pb010, pb030, 
         py021g) %>% collect(n = Inf)
 
@@ -62,8 +65,10 @@ rm(c07p, c08p, c09p, c10p, c11p, c12p, c13p)
 silc.p <- left_join(silc.p, cxxp %>% select(py021g, pb010, pb030))
 #rm(cxxp)
 
-# include data for 2014-2017
+############################################################################
+################# 3. include data for 2014-2017 ###########################
 
+### 3.1 prepare cyyp:
 c14p <- tbl(pg, "c14p") %>% filter(pb020 %in% country) %>% 
   select(pb010, pb020, pb030, pb040, pb150, py010g, py020g, py050g, py050n, 
          py080g, py090g, py100g, py110g, py120g, py130g, py140g, px010, 
@@ -89,11 +94,9 @@ rm(c14p, c15p, c16p)
 #          px030, py021g) %>% collect(n = Inf)
 
 # merge data to silc.p
-
 silc.p <- bind_rows(silc.p, cyyp)
 
-# Download c[YY]h tables 2007 - 2013:
-
+### 3.2 prepare cyyh:
 c14h <- tbl(pg, "c14h") %>%
   filter(hb020 %in% country) %>%
   select(hb010, hb020, hb030, hy010, hy020, hy040g, hy050g, hy060g, hy070g, hy080g, 
@@ -118,7 +121,7 @@ rm(c14h, c15h, c16h)
 # merge data to silc.h
 silc.h <- bind_rows(silc.h, cyyh)
 
-# Download c[YY]d tables 2007 - 2013:
+### 3.3 prepare cyyd:
 
 c14d <- tbl(pg, "c14d") %>%
   filter(db020 %in% country) %>%
@@ -142,7 +145,7 @@ rm(c14d, c15d, c16d)
 silc.d <- bind_rows(silc.d, cyyd)
 
 
-# Download c[YY]r tables 2007 - 2013:
+### 3.4 prepare cyyr:
 
 c14r <- tbl(pg, "c14r") %>% 
   filter(rb020 %in% country) %>%
@@ -166,28 +169,36 @@ rm(c14r, c15r, c16r)
 silc.r <- bind_rows(silc.r, cyyr)
 
 
+###########################################################################
+######################### 4. Merging ######################################
 
-# Create unique IDs for merging
-silc.p <- silc.p %>% mutate(id_h = paste0(pb020, px030))
+### 4.1 Create unique IDs for merging
+silc.p <- silc.p %>% mutate(id_h = paste0(pb020, px030)) %>%
+                     mutate(id_p = paste0(pb020, pb030))
 
 silc.h <- silc.h %>% mutate(id_h = paste0(hb020, hb030))
 
 silc.d <- silc.d %>% mutate(id_h = paste0(db020, db030))
 
-silc.r <- silc.r %>% mutate(id_h = paste0(rb020, rx030))
+silc.r <- silc.r %>% mutate(id_h = paste0(rb020, rx030)) %>% 
+                     mutate(id_p = paste0(rb020, rb030))
 
-
-# Merge the datasets
+### 4.2 Merge the datasets
 silc.pd <- left_join(silc.p, silc.d %>% select(id_h, db010, db020, db040, db090)
                      , by = c('id_h'='id_h', 'pb010'='db010'))
 
 silc.hd <- left_join(silc.h, silc.d %>% select(id_h, db010, db020, db040, db090)
                      , by = c('id_h' = 'id_h', 'hb010'='db010'))
 
+silc.rp <- left_join(silc.r, silc.p, by= c('id_p' = 'id_p', 'rb010' = 'pb010'))
+
 rm(cxxp, cyyp, cyyh, cyyd, cyyr)
 
 
-# create car variable for later use: combine py020g & py021g 
+############################################################################
+################# 5. create 'car' variable for later use: ##################
+#################       combine py020g & py021g           ##################
+
 int1 <- seq(2004,2006,1)
 int2 <- seq(2007,2016,1)
 df1 <- silc.pd %>% filter(pb010 %in% int1)
