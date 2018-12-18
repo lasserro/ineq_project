@@ -5,7 +5,7 @@
 ####################    P2 (wid.world):Nur Personen >= 20 Jahre 
 ####################       & partial sharing of resources 
 #############################################################################
-#options(digits = 0)
+
 
 #############################################################################
 ###################### 1. P1 (Eurostat): ####################################
@@ -36,7 +36,7 @@ silc.rph <- silc.rph %>% mutate(hinc = hy040g + hy090g + hy110g)
 
 silc.rph <- silc.rph %>% group_by(id_h.x, rb010) %>% mutate(sum_pinc = sum(pinc))
 
-### 2.3 Pre-tax factor income:
+### 2.3 Pre-tax factor income [income_p11]
 silc.rph <- silc.rph %>% mutate(income_p11 = (sum_pinc + hinc)/hx050)
 
 
@@ -48,7 +48,7 @@ silc.rph <- silc.rph %>% mutate(benefits = py090g + py100g)
 silc.rph <- silc.rph %>% group_by(id_h.x, rb010) %>% mutate(sum_benefits = sum(benefits))
 
 
-### 3.2 Pre-tax national income
+### 3.2 Pre-tax national income [income_p12]
 silc.rph <- silc.rph %>% mutate(income_p12 =( income_p11 +
                                 sum_benefits/hx050))
 
@@ -67,7 +67,7 @@ silc.rph <- silc.rph %>% group_by(id_h.x, rb010) %>% mutate(sum_ptransfers = sum
 ### 4.1.2 sum(taxes)
 silc.rph <- silc.rph %>% mutate(taxes = hy120g + hy130g + hy140g)
 
-### 4.2 Post-tax disposable income
+### 4.2 Post-tax disposable income [income_p13]
 silc.rph <- silc.rph %>% mutate(income_p13 = income_p12 + (ptransfers + 
                                             htransfers - taxes)/hx050)
 
