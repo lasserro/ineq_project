@@ -3,10 +3,10 @@
 ## ########## ########################## ######################### #############
 ######"This is why we wipe the floor with those stata guys."############### ####
 
-library(eurostat)
+#library(eurostat)
 library(dplyr)
-library(survey)
-library(convey)
+#library(survey)
+#library(convey)
 
 country <- "IE"
 year <- seq(2004, 2013, 1) # keep that period. 2014-2016 is included seperately
@@ -18,3 +18,6 @@ source('./reports/IRL/Scripts_IRL/_connection.R')
 
 ### Data transformation
 source('./reports/IRL/Scripts_IRL/_setup_IRL.R')
+
+### Grundgesamtheit P1
+source('~/Documents/University/Volkswirtschaft/Master/WS2018/Verteilung/Ireland Project/ineq_project/reports/IRL/Scripts_IRL/grundgesamtheit_P1.R')
