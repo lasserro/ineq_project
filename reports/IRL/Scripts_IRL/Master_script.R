@@ -19,5 +19,5 @@ source('./reports/IRL/Scripts_IRL/_connection.R')
 ### Data transformation
 source('./reports/IRL/Scripts_IRL/_setup_IRL.R')
 
-### Grundgesamtheit P1
+### Grundgesamtheiten
 source('./reports/IRL/Scripts_IRL/grundgesamtheiten.R')
