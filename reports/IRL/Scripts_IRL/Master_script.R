@@ -20,4 +20,4 @@ source('./reports/IRL/Scripts_IRL/_connection.R')
 source('./reports/IRL/Scripts_IRL/_setup_IRL.R')
 
 ### Grundgesamtheit P1
-source('./reports/IRL/Scripts_IRL/grundgesamtheit_P1.R')
+source('./reports/IRL/Scripts_IRL/grundgesamtheiten.R')
