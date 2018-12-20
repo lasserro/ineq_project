@@ -76,14 +76,51 @@ silc.rph <- silc.rph %>% mutate(income_p13 = income_p12 + (ptransfers +
 silc.rph$hy020a <- silc.rph$hy020/silc.rph$hx050
 
 summary(silc.rph$hy020a==silc.rph$income_p13)
+# 
+# silc.rph$income_p13_round0 <- round(silc.rph$income_p13, digits = 0)
+# silc.rph$hy020a_round0 <- round(silc.rph$hy020a, digits = 0)
+# summary(silc.rph$hy020a_round0==silc.rph$income_p13_round0)
+# 
+# 
+# # it is almost. good enough for me... 3/4 der Werte stimmen exakt, der Rest wsl
+# # nur minimaler Unterschied, könnte man noch überprüfen mit Hilfe von Intervallen?
+# 
+# # all.equal(silc.rph$hy020a, silc.rph$income_p13) 
+# # schaut gut aus: "Mean relative difference: 0.04520184"
 
-silc.rph$income_p13_round0 <- round(silc.rph$income_p13, digits = 0)
-silc.rph$hy020a_round0 <- round(silc.rph$hy020a, digits = 0)
-summary(silc.rph$hy020a_round0==silc.rph$income_p13_round0)
-
-# it is almost. good enough for me... 3/4 der Werte stimmen exakt, der Rest wsl
-# nur minimaler Unterschied, könnte man noch überprüfen mit Hilfe von Intervallen?
-
-# all.equal(silc.rph$hy020a, silc.rph$income_p13)
 
 
+#############################################################################
+######################### 1. P2 (wid.world): ################################
+
+# 1.1 filter (rx010(age) >= 20):
+
+silc.rph2 <- silc.rph %>% filter(rx010 >= 20) %>% add_count(id_h.x) %>% 
+  rename(n_hh = n)
+
+#############################################################################
+######### 2. Pre-tax factor income (Canberra: primary income)  ##############
+
+silc.rph2 <- silc.rph2 %>% mutate(income_p21 = pinc + hinc/n_hh)
+
+
+
+#############################################################################
+################## 3. Pre-tax national income  ##############################
+
+silc.rph2 <- silc.rph2 %>% mutate(income_p22 = income_p21 + benefits)
+
+
+#############################################################################
+################# 4. Post-tax disposable income #############################
+
+silc.rph2 <- silc.rph2 %>% mutate(income_p23 = income_p22 + ptransfers +
+                                htransfers/n_hh - taxes/n_hh)
+
+#############################################################################
+
+silc.P1 <- silc.rph %>% select(rb010, id_p, id_h.x, income_p11, income_p12, 
+                               income_p13)
+
+silc.P2 <- silc.rph2 %>% select(rb010, id_p, id_h.x, income_p21, income_p22, 
+                                income_p23)
