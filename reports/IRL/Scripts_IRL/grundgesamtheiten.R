@@ -18,7 +18,11 @@ silc.rph <- left_join(silc.rp, silc.h, by = c('id_h.x' = 'id_h',
 # 1.2  check for NA's and if we can set them to 0:
 # diff <- nrow(silc.r) - nrow(silc.p)
 # summary(is.na(silc.rph))
-# only Persons not in p but in r (age<16) are NA's. so its fine to set 0
+
+# 150 obs. in rb050 (cross-secional weight) is NA. rm observations
+silc.rph <- silc.rph %>% filter(!is.na(rb050))
+
+# now only Persons not in p but in r (age<16) are NA's. so its fine to set 0
 
 silc.rph[is.na(silc.rph)] <- 0
 
@@ -89,7 +93,6 @@ summary(silc.rph$hy020a==silc.rph$income_p13)
 # # schaut gut aus: "Mean relative difference: 0.04520184"
 
 
-
 #############################################################################
 ######################### 1. P2 (wid.world): ################################
 
@@ -118,9 +121,9 @@ silc.rph2 <- silc.rph2 %>% mutate(income_p23 = income_p22 + ptransfers +
                                 htransfers/n_hh - taxes/n_hh)
 
 #############################################################################
-
-silc.P1 <- silc.rph %>% select(rb010, id_p, id_h.x, income_p11, income_p12, 
-                               income_p13)
-
-silc.P2 <- silc.rph2 %>% select(rb010, id_p, id_h.x, income_p21, income_p22, 
-                                income_p23)
+# 
+# silc.P1 <- silc.rph %>% select(rb010, id_p, id_h.x, income_p11, income_p12, 
+#                                income_p13)
+# 
+# silc.P2 <- silc.rph2 %>% select(rb010, id_p, id_h.x, income_p21, income_p22, 
+#                                 income_p23)
