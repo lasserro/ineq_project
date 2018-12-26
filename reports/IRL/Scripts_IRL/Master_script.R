@@ -5,8 +5,8 @@
 
 #library(eurostat)
 library(dplyr)
-#library(survey)
-#library(convey)
+library(survey)
+library(convey)
 
 country <- "IE"
 year <- seq(2004, 2013, 1) # keep that period. 2014-2016 is included seperately
@@ -21,3 +21,6 @@ source('./reports/IRL/Scripts_IRL/_setup_IRL.R')
 
 ### Grundgesamtheiten
 source('./reports/IRL/Scripts_IRL/grundgesamtheiten.R')
+
+### Indicators
+source('./reports/IRL/Scripts_IRL/indicators_base')
