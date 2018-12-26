@@ -5,100 +5,115 @@
 # Datum: 
 #
 # -------------------------------------------------------------------------
+# 
+# library(dplyr)
+# library(survey)
+# library(convey)
+# 
+# country <- "IE"
+# year <- seq(2004, 2013, 1)
+# 
+# # Source the Setup scripts to provide merged household and personal data
+# source("reports/IRL/Scripts_IRL/_connection.R")
+# source("reports/IRL/Scripts_IRL/_setup_IRL.R")
+# 
+# 
+# # Subsetting --------------------------------------------------------------
+# 
+# # To get useful results we may want to subset to only positive income
+# silc.pd.inc <- silc.pd %>% filter(py010g > 0)
+# silc.hd.inc <- silc.hd %>% filter(hy010 > 0)
 
-library(dplyr)
-library(survey)
-library(convey)
+################################################################################
+################## 1. Creating Survey Objects ##################################
 
-country <- "IE"
-year <- seq(2004, 2013, 1)
+P1.svy <- svydesign(ids =  ~ id_p,
+                         strata = ~rb020,
+                         weights = ~rb050,
+                         data = silc.rph) %>% convey_prep()
 
-# Source the Setup scripts to provide merged household and personal data
-source("reports/IRL/Scripts_IRL/_connection.R")
-source("reports/IRL/Scripts_IRL/_setup_IRL.R")
-
-
-# Subsetting --------------------------------------------------------------
-
-# To get useful results we may want to subset to only positive income
-silc.pd.inc <- silc.pd %>% filter(py010g > 0)
-silc.hd.inc <- silc.hd %>% filter(hy010 > 0)
-
-# Creating Survey Objects -------------------------------------------------
-
-silc.pd.svy <- svydesign(ids =  ~ id_h,
-                         strata = ~db020,
-                         weights = ~pb040,
-                         data = silc.pd) %>% convey_prep()
-
-silc.hd.svy <- svydesign(ids = ~id_h,
-                         strata = ~db020,
-                         weights = ~db090,
-                         data = silc.hd) %>% convey_prep()
+P2.svy <- svydesign(ids = ~id_p,
+                         strata = ~rb020,
+                         weights = ~rb050,
+                         data = silc.rph2) %>% convey_prep()
 
 
-# Indicators --------------------------------------------------------------
+# # Indicators --------------------------------------------------------------
+# 
+# # Das sind nur aggregierte Werte, 
+# ################################################################################
+# ########################## 2. Canberra Indicators###############################
+# 
+# ### 2.1 pre-tax factor income
+# mean_p11 <- svymean(~income_p11, P1.svy)
+# median_p11 <- svyquantile(~income_p11, P1.svy, quantiles = c(0.5))
+# gini_p11 <- svygini(~income_p11, P1.svy)
+# P8020_p11 <- svyqsr(~income_p11, P1.svy, 0.2, 0.8)
+# 
+# top10_p11 <- svytotal(~income_p11, subset(P1.svy, income_p11 >= 
+#                       as.numeric(svyquantile(~income_p11, P1.svy, 
+#                       quantile = 0.9)))) / svytotal(~income_p11, P1.svy)
+# 
+# ### 2.2 pre-tax national income
+# mean_p12 <- svymean(~income_p12, P1.svy)
+# median_p12 <- svyquantile(~income_p12, P1.svy, quantiles = c(0.5))
+# gini_p12 <- svygini(~income_p12, P1.svy)
+# P8020_p12 <- svyqsr(~income_p12, P1.svy, 0.2, 0.8)
+# 
+# top10_p12 <- svytotal(~income_p12, subset(P1.svy, income_p12 >= 
+#                       as.numeric(svyquantile(~income_p12, P1.svy, 
+#                       quantile = 0.9)))) / svytotal(~income_p12, P1.svy)
+# 
+# ### 2.3 post-tax disposable income
+# mean_p13 <- svymean(~income_p13, P1.svy)
+# median_p13 <- svyquantile(~income_p13, P1.svy, quantiles = c(0.5))
+# gini_p13 <- svygini(~income_p13, P1.svy)
+# P8020_p13 <- svyqsr(~income_p13, P1.svy, 0.2, 0.8)
+# 
+# top10_p13 <- svytotal(~income_p13, subset(P1.svy, income_p12 >= 
+#                       as.numeric(svyquantile(~income_p13, P1.svy, 
+#                       quantile = 0.9)))) / svytotal(~income_p13, P1.svy)
+# 
+# 
+# 
+# ################################################################################
+# ########################## 3. wid Indicators####################################
+# 
+# ### 3.1 pre-tax factor income
+# mean_p21 <- svymean(~income_p21, P2.svy)
+# median_p21 <- svyquantile(~income_p21, P2.svy, quantiles = c(0.5))
+# gini_p21 <- svygini(~income_p21, P2.svy)
+# P8020_p21 <- svyqsr(~income_p21, P2.svy, 0.2, 0.8)
+# 
+# top10_p21 <- svytotal(~income_p21, subset(P2.svy, income_p21 >= 
+#                       as.numeric(svyquantile(~income_p21, P2.svy, 
+#                       quantile = 0.9)))) / svytotal(~income_p21, P2.svy)
+# 
+# ### 3.2 pre-tax national income
+# mean_p22 <- svymean(~income_p22, P2.svy)
+# median_p22 <- svyquantile(~income_p22, P2.svy, quantiles = c(0.5))
+# gini_p22 <- svygini(~income_p22, P2.svy)
+# P8020_p22 <- svyqsr(~income_p22, P2.svy, 0.2, 0.8)
+# 
+# top10_p22 <- svytotal(~income_p22, subset(P2.svy, income_p22 >= 
+#                                             as.numeric(svyquantile(~income_p22, P2.svy, 
+#                                                                    quantile = 0.9)))) / svytotal(~income_p22, P2.svy)
+# 
+# ### 3.3 post-tax dispo income
+# mean_p23 <- svymean(~income_p23, P2.svy)
+# median_p23 <- svyquantile(~income_p23, P2.svy, quantiles = c(0.5))
+# gini_p23 <- svygini(~income_p23, P2.svy)
+# P8020_p23 <- svyqsr(~income_p23, P2.svy, 0.2, 0.8)
+# 
+# top10_p23 <- svytotal(~income_p23, subset(P2.svy, income_p23 >= 
+#                                             as.numeric(svyquantile(~income_p23, P2.svy, 
+#                                                                    quantile = 0.9)))) / svytotal(~income_p23, P2.svy)
 
-# Mean Income
-#
-svymean(~total.inc, silc.pd.svy)
-svymean(~hy010, silc.hd.svy)
-# For comparing countries
-# svyby(~total.inc, ~as.factor(db020), silc.pd.svy, svymean)
-# svyby(~hy010, ~as.factor(db020), silc.hd.svy, svymean)
 
-# Median Income
-#
-svyquantile(~total.inc, silc.pd.svy, quantiles = c(0.5))
-svyquantile(~hy010, silc.hd.svy, quantiles = c(0.5))
+#### grouped by years
 
-# For comparing countries
-# svyby(~total.inc, ~as.factor(db020), silc.pd.svy,
-#       svyquantile, ~total.inc, quantiles = c(0.5), keep.var = FALSE)
-# svyby(~hy010, ~as.factor(db020), silc.hd.svy,
-#       svyquantile, ~hy010, quantiles = c(0.5), keep.var = FALSE)
+mean_p11 <- svyby(~income_p11, ~rb010, P1.svy, svymean)
+median_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, quantile = 0.5)
+gini_p11 <- svyby(~income_p11, ~rb010, P1.svy, svygini)
 
-# Decile Points
-#
-svyquantile(~total.inc, silc.pd.svy, quantiles = seq(0, 1, 0.1))
-svyquantile(~hy010, silc.hd.svy, quantiles = seq(0, 1, 0.1))
-# For comparing countries
-# svyby(~total.inc, ~as.factor(db020), silc.pd.svy, 
-#       svyquantile, ~total.inc, quantiles = seq(0, 1, 0.1), keep.var = FALSE)
-# svyby(~hy010, ~as.factor(hb020), silc.pd.svy, 
-#       svyquantile, ~total.inc, quantiles = seq(0, 1, 0.1), keep.var = FALSE)
 
-# Quantile Share Ratio
-#
-svyqsr(~total.inc, silc.pd.svy, 0.2, 0.8)
-svyqsr(~hy010, silc.hd.svy, 0.2, 0.8)
-# For comparing countries
-# svyby(~total.inc, ~as.factor(db020), silc.pd.svy, svyqsr, 0.2, 0.8)
-# svyby(~hy010, ~as.factor(db020), silc.hd.svy, svyqsr, 0.2, 0.8)
-
-# Top 10% Income Share
-#
-svytotal(~total.inc, subset(silc.pd.svy, pb020 == country & total.inc >= 
-                           as.numeric(svyquantile(~total.inc, silc.pd.svy, quantile = 0.9)))) / 
-  svytotal(~total.inc, subset(silc.pd.svy, pb020 == country))
-svytotal(~hy010, subset(silc.hd.svy, db020 == country & hy010 >= 
-                          as.numeric(svyquantile(~hy010, silc.hd.svy, quantile = 0.9)))) /
-  svytotal(~hy010,subset(silc.hd.svy, db020 == country))
-
-# Gini Coefficient
-#
-svygini(~total.inc, silc.pd.svy)
-svygini(~hy010, silc.hd.svy)
-# For comparing countries
-# svyby(~total.inc, ~as.factor(db020), silc.pd.svy, svygini)
-# svyby(~hy010, ~as.factor(db020), silc.hd.svy, svygini)
-
-# Theil Index
-#
-svygei(~total.inc, silc.pd.svy, epsilon = 1)
-svygei(~hy010, silc.hd.svy, epsilon = 1)
-# For comparing countries
-# svyby(~total.inc, ~as.factor(db020), silc.pd.svy,
-#      svygei, epsilon = 1)
-# svyby(~hy010, ~as.factor(db020), silc.hd.svy,
-#      svygei, epsilon = 1)
