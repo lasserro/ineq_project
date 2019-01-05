@@ -26,6 +26,11 @@
 
 ################################################################################
 ################## 1. Creating Survey Objects ##################################
+silc.rph <- silc.rph %>% filter(income_p11 >0, income_p12 > 0, income_p13 > 0,
+                                income_p21 >0, income_p22 > 0, income_p23 > 0)
+silc.rph2 <- silc.rph2 %>% filter(income_p11 >0, income_p12 > 0, income_p13 > 0,
+                                  income_p21 >0, income_p22 > 0, income_p23 > 0)
+
 
 P1.svy <- svydesign(ids =  ~ id_p,
                          strata = ~rb020,
@@ -111,9 +116,24 @@ P2.svy <- svydesign(ids = ~id_p,
 
 
 #### grouped by years
+# rm(list= ls()[!(ls() %in% c('P1.svy', 'P2.svy', 'silc.rph', 'silc.rph2'))])
+# silc.rph1 <- silc.rph
+# silc.rph <- silc.rph %>% filter(income_p11 > 0)
+# silc.rph <- as.data.frame(silc.rph)
 
 mean_p11 <- svyby(~income_p11, ~rb010, P1.svy, svymean)
-median_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, quantile = 0.5)
+median_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, quantiles = 0.5, ci = T)
 gini_p11 <- svyby(~income_p11, ~rb010, P1.svy, svygini)
+p8020_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyqsr)
+
+top10_svy_p11 <- subset(P1.svy, income_p11 >= as.numeric(
+  svyquantile(~income_p11, P1.svy, quantile=c(0.9))))
+top10num_p11 <- svyby(~income_p11, ~rb010, top10_svy_p11, svytotal)
+top10den_p11 <- svyby(~income_p11, ~rb010, P1.svy, svytotal)
+top10_p11 <- top10num_p11 / top10den_p11
+
+
+
+
 
 
