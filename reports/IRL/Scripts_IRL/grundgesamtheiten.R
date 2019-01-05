@@ -129,11 +129,13 @@ silc.rph <- silc.rph %>% filter(income_p11 >0, income_p12 > 0, income_p13 > 0)
 silc.rph2 <- silc.rph2 %>% filter(income_p11 >0, income_p12 > 0, income_p13 > 0,
                                   income_p21 >0, income_p22 > 0, income_p23 > 0)
 
-### ajustment for inflation:
+### Inflation:
+# "prc_hicp_aind" = anual infalion rate with 2015 prizes
 
 inflation <- get_eurostat("prc_hicp_aind", time_format = "raw")
 inflation <- inflation %>% filter(unit == "INX_A_AVG", coicop == "CP00", 
                                   geo == "IE", time %in% 2004:2016) %>% 
   select(time, values) %>% arrange(time)
 
+inflation$values <- inflation$values/100
 
