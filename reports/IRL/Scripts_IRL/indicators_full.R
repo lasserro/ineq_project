@@ -27,7 +27,12 @@ P2.svy <- svydesign(ids = ~id_p,
 ### 2.1 pre-tax factor income
 
 mean_p11 <- svyby(~income_p11, ~rb010, P1.svy, svymean)
-median_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, quantiles = 0.5, ci = T)
+mean_p11$income_p11 <- mean_p11$income_p11 / inflation$values
+
+median_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, 
+                    quantiles = 0.5, ci = T)
+median_p11$income_p11 <-  median_p11$income_p11 / inflation$values
+
 gini_p11 <- svyby(~income_p11, ~rb010, P1.svy, svygini)
 p8020_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyqsr)
 
@@ -44,7 +49,12 @@ colnames(table_p11) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top
 ### 2.2 pre-tax national income
 
 mean_p12 <- svyby(~income_p12, ~rb010, P1.svy, svymean)
-median_p12 <- svyby(~income_p12, ~rb010, P1.svy, svyquantile, quantiles = 0.5, ci = T)
+mean_p12$income_p12 <- mean_p12$income_p12 / inflation$values
+
+median_p12 <- svyby(~income_p12, ~rb010, P1.svy, svyquantile, 
+                    quantiles = 0.5, ci = T)
+median_p12$income_p12 <-  median_p12$income_p12 / inflation$values
+
 gini_p12 <- svyby(~income_p12, ~rb010, P1.svy, svygini)
 p8020_p12 <- svyby(~income_p12, ~rb010, P1.svy, svyqsr)
 
@@ -61,7 +71,12 @@ colnames(table_p12) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top
 ### 2.3 post-tax disposable income
 
 mean_p13 <- svyby(~income_p13, ~rb010, P1.svy, svymean)
-median_p13 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, quantiles = 0.5, ci = T)
+mean_p13$income_p13 <- mean_p13$income_p13 / inflation$values
+
+median_p13 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, 
+                    quantiles = 0.5, ci = T)
+median_p13$income_p13 <-  median_p13$income_p13 / inflation$values
+
 gini_p13 <- svyby(~income_p13, ~rb010, P1.svy, svygini)
 p8020_p13 <- svyby(~income_p13, ~rb010, P1.svy, svyqsr)
 
@@ -81,7 +96,12 @@ colnames(table_p13) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top
 ### 3.1 pre-tax factor income
 
 mean_p21 <- svyby(~income_p21, ~rb010, P2.svy, svymean)
-median_p21 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, quantiles = 0.5, ci = T)
+mean_p21$income_p21 <- mean_p21$income_p21 / inflation$values
+
+median_p21 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, 
+                    quantiles = 0.5, ci = T)
+median_p21$income_p21 <-  median_p21$income_p21 / inflation$values
+
 gini_p21 <- svyby(~income_p21, ~rb010, P2.svy, svygini)
 p8020_p21 <- svyby(~income_p21, ~rb010, P2.svy, svyqsr)
 
@@ -98,7 +118,12 @@ colnames(table_p21) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top
 ### 3.2 pre-tax national income
 
 mean_p22 <- svyby(~income_p22, ~rb010, P2.svy, svymean)
-median_p22 <- svyby(~income_p22, ~rb010, P2.svy, svyquantile, quantiles = 0.5, ci = T)
+mean_p22$income_p22 <- mean_p22$income_p22 / inflation$values
+
+median_p22 <- svyby(~income_p22, ~rb010, P2.svy, svyquantile, 
+                    quantiles = 0.5, ci = T)
+median_p22$income_p22 <-  median_p22$income_p22 / inflation$values
+
 gini_p22 <- svyby(~income_p22, ~rb010, P2.svy, svygini)
 p8020_p22 <- svyby(~income_p22, ~rb010, P2.svy, svyqsr)
 
@@ -115,7 +140,12 @@ colnames(table_p22) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top
 ### 3.3 post-tax dispo income
 
 mean_p23 <- svyby(~income_p23, ~rb010, P2.svy, svymean)
-median_p23 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, quantiles = 0.5, ci = T)
+mean_p23$income_p23 <- mean_p23$income_p23 / inflation$values
+
+median_p23 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, 
+                    quantiles = 0.5, ci = T)
+median_p23$income_p23 <-  median_p23$income_p23 / inflation$values
+
 gini_p23 <- svyby(~income_p23, ~rb010, P2.svy, svygini)
 p8020_p23 <- svyby(~income_p23, ~rb010, P2.svy, svyqsr)
 
@@ -130,7 +160,7 @@ table_p23 <- data.frame(mean_p23$rb010, mean_p23$income_p23, median_p23$income_p
 colnames(table_p23) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
 
 
-rm(list= ls()[!(ls() %in% c('P1.svy', 'P2.svy', 'silc.rph', 'silc.rph2',
+ rm(list= ls()[!(ls() %in% c('P1.svy', 'P2.svy', 'silc.rph', 'silc.rph2',
                             'table_p11', 'table_p12', 'table_p13', 'table_p21', 
                             'table_p22', 'table_p23'))])
 
