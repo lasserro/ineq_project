@@ -23,4 +23,4 @@ source('./reports/IRL/Scripts_IRL/_setup_IRL.R')
 source('./reports/IRL/Scripts_IRL/grundgesamtheiten.R')
 
 ### Indicators
-source('./reports/IRL/Scripts_IRL/indicators_full')
+source('./reports/IRL/Scripts_IRL/indicators_full.R')
