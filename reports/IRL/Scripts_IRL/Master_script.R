@@ -3,7 +3,7 @@
 ## ########## ########################## ######################### #############
 ######"This is why we wipe the floor with those stata guys."############### ####
 
-#library(eurostat)
+library(eurostat)
 library(dplyr)
 library(survey)
 library(convey)
@@ -23,4 +23,4 @@ source('./reports/IRL/Scripts_IRL/_setup_IRL.R')
 source('./reports/IRL/Scripts_IRL/grundgesamtheiten.R')
 
 ### Indicators
-source('./reports/IRL/Scripts_IRL/indicators_base')
+source('./reports/IRL/Scripts_IRL/indicators_full')
