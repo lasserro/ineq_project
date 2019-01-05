@@ -120,10 +120,20 @@ silc.rph2 <- silc.rph2 %>% mutate(income_p22 = income_p21 + benefits)
 silc.rph2 <- silc.rph2 %>% mutate(income_p23 = income_p22 + ptransfers +
                                 htransfers/n_hh - taxes/n_hh)
 
+
 #############################################################################
-# 
-# silc.P1 <- silc.rph %>% select(rb010, id_p, id_h.x, income_p11, income_p12, 
-#                                income_p13)
-# 
-# silc.P2 <- silc.rph2 %>% select(rb010, id_p, id_h.x, income_p21, income_p22, 
-#                                 income_p23)
+################# Final data manipulation : #################################
+
+### filter for incomes > 0:
+silc.rph <- silc.rph %>% filter(income_p11 >0, income_p12 > 0, income_p13 > 0)
+silc.rph2 <- silc.rph2 %>% filter(income_p11 >0, income_p12 > 0, income_p13 > 0,
+                                  income_p21 >0, income_p22 > 0, income_p23 > 0)
+
+### ajustment for inflation:
+
+inflation <- get_eurostat("prc_hicp_aind", time_format = "raw")
+inflation <- inflation %>% filter(unit == "INX_A_AVG", coicop == "CP00", 
+                                  geo == "IE", time %in% 2004:2016) %>% 
+  select(time, values) %>% arrange(time)
+
+
