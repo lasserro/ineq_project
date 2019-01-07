@@ -7,6 +7,7 @@ library(eurostat)
 library(dplyr)
 library(survey)
 library(convey)
+library(ggplot2)
 
 country <- "IE"
 year <- seq(2004, 2013, 1) # keep that period. 2014-2016 is included seperately
@@ -24,3 +25,5 @@ source('./reports/IRL/Scripts_IRL/grundgesamtheiten.R')
 
 ### Indicators
 source('./reports/IRL/Scripts_IRL/indicators_full.R')
+# indicators script will show 50+ warnings or so. ignore them. just standarderror 
+# issues we must not mind
