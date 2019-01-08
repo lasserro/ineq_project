@@ -258,23 +258,28 @@ yunemployment_plot <- ggplot() +
   theme(legend.position = 'none')
 
 
-############################## plot gini 2 ##########################
-
+############################## plot gini barplot ##########################
+library(reshape2)
 gini <- data.frame(seq(2004,2016,1),indicators_p11$Gini, indicators_p12$Gini, indicators_p13$Gini)
-colnames(gini) <- c('Year', 'Gini_p11', 'Gini_p12', 'Gini_p13')
+colnames(gini) <- c('Year', 'Pre-tax factor income', 'Pre-tax national income', 'Post-tax disposable income')
+gini$Year <- as.factor(gini$Year)
+gini <- melt(gini)
 
-data$x <- factor(data$x, levels = data[["x"]])
+gini_barplot_p1 <- ggplot(gini, aes(x=Year, y=value, fill=variable)) + 
+  geom_bar (stat="identity", position ='dodge', width = 0.8) +
+  theme_linedraw() + coord_cartesian(ylim=c(0.2,0.48)) + 
+  scale_fill_manual(values = 
+                    c('Pre-tax factor income' = 'red4', 
+                      'Pre-tax national income' = 'blue', 
+                      'Post-tax disposable income' = 'green4')) +
+  labs( x = 'Year', y = 'Gini-indizes',
+       title = 'Gini index',
+       subtitle = 'equal sharing of resources within household',
+       caption = 'Source: EU-SILC') +
+  theme(legend.position="bottom", legend.title = element_blank())
+  
 
-gini$Year <- factor(gini$Year, levels = data[['Year']])
 
-p <- plot_ly(gini, x = ~Year, y = ~Gini_p11, type = 'bar', name = 'Primary Product', marker = list(color = 'pink')) %>%
-  add_trace(y = ~Gini_p12, name = 'Secondary Product', marker = list(color = 'blue')) %>%
-  add_trace(y = ~Gini_p13, name = 'stuff', marker = list(color = 'darkgreen')) %>%
-  layout(xaxis = list(title = "", tickangle = -45),
-         yaxis = list(title = ""),
-         margin = list(b = 100),
-         barmode = 'group'); p
-
-
+ 
 
 
