@@ -248,7 +248,7 @@ top10_plot_p2
 
 ################# Plot youth unemployment #####################################
 
-ggplot() + 
+yunemployment_plot <- ggplot() + 
   geom_line(mapping = aes(x = yunempl_0416$time, y = yunempl_0416$values, 
                           color = 'darkred'), size = 1) + theme_linedraw() +
   labs(color = '', x = 'Year', y = 'Youth unemployment in %',
@@ -256,4 +256,25 @@ ggplot() +
        subtitle = 'aged 15 - 24 as a percentage of the labour force of the same age',
        caption = 'Source: Eurostat Database') +
   theme(legend.position = 'none')
+
+
+############################## plot gini 2 ##########################
+
+gini <- data.frame(seq(2004,2016,1),indicators_p11$Gini, indicators_p12$Gini, indicators_p13$Gini)
+colnames(gini) <- c('Year', 'Gini_p11', 'Gini_p12', 'Gini_p13')
+
+data$x <- factor(data$x, levels = data[["x"]])
+
+gini$Year <- factor(gini$Year, levels = data[['Year']])
+
+p <- plot_ly(gini, x = ~Year, y = ~Gini_p11, type = 'bar', name = 'Primary Product', marker = list(color = 'pink')) %>%
+  add_trace(y = ~Gini_p12, name = 'Secondary Product', marker = list(color = 'blue')) %>%
+  add_trace(y = ~Gini_p13, name = 'stuff', marker = list(color = 'darkgreen')) %>%
+  layout(xaxis = list(title = "", tickangle = -45),
+         yaxis = list(title = ""),
+         margin = list(b = 100),
+         barmode = 'group'); p
+
+
+
 
