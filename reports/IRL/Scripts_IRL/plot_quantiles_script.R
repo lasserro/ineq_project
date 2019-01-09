@@ -18,8 +18,8 @@ table_quant_p13 <- data.frame(quant_p13_10$rb010, quant_p13_10$income_p13,
                               quant_p13_75$income_p13, quant_p13_90$income_p13,
                               mean_p13$income_p13)
 colnames(table_quant_p13) <- c('Jahr', '10%', '25%', 'Median', '75%', '90%', 'Mean')
-write.csv(table_quant_p13, './reports/IRL/tables/table_quantiles_p13.csv')
-table_quant_p13 <- read.csv('./reports/IRL/tables/table_quantiles_p13.csv')
+#write.csv(table_quant_p13, './reports/IRL/tables/table_quantiles_p13.csv')
+#table_quant_p13 <- read.csv('./reports/IRL/tables/table_quantiles_p13.csv')
 
 brks <- seq(2004, 2016, 1)
 quant_plot_p13 <- ggplot() +
@@ -134,7 +134,7 @@ table_quant_p11 <- data.frame(quant_p11_10$rb010, quant_p11_10$income_p11,
                               quant_p11_75$income_p11, quant_p11_90$income_p11,
                               mean_p11$income_p11)
 colnames(table_quant_p11) <- c('Jahr', '10%', '25%', 'Median', '75%', '90%', 'Mean')
-write.csv(table_quant_p11, './reports/IRL/tables/table_quantiles_p11.csv')
+#write.csv(table_quant_p11, './reports/IRL/tables/table_quantiles_p11.csv')
 #table_quant_p11 <- read.csv('./reports/IRL/tables/table_quantiles_p11.csv')
 
 brks <- seq(2004, 2016, 1)
@@ -171,7 +171,51 @@ quant_plot_p11 <- ggplot() +
   theme(legend.position="bottom")
 quant_plot_p11
 
+#### Quantile plot p13; percentage change ######
 
+table_quant_p13$`10%_ch` <- table_quant_p13$`10%` / table_quant_p13$`10%`[1]*100
+table_quant_p13$`25%_ch` <- table_quant_p13$`25%` / table_quant_p13$`25%`[1]*100
+table_quant_p13$`Median_ch` <- table_quant_p13$`Median` / table_quant_p13$`Median`[1]*100
+table_quant_p13$`75%_ch` <- table_quant_p13$`75%` / table_quant_p13$`75%`[1]*100
+table_quant_p13$`90%_ch` <- table_quant_p13$`90%` / table_quant_p13$`90%`[1]*100
+table_quant_p13$`Mean_ch` <- table_quant_p13$`Mean` / table_quant_p13$`Mean`[1]*100
+
+
+
+
+
+brks <- seq(2004, 2016, 1)
+quant_ch_plot_p13 <- ggplot() +
+  geom_line(mapping = aes(y = table_quant_p13$'10%_ch', x = table_quant_p13$Jahr,
+                          color = "10th"),
+            size = 1.2 ) +
+  geom_line(mapping = aes(y = table_quant_p13$'25%_ch',x = table_quant_p13$Jahr,
+                          color = "25th"), size = 1) +
+  geom_line(mapping = aes(y = table_quant_p13$Median_ch,x = table_quant_p13$Jahr,
+                          color = "Median"), 
+            size = 1) +
+  geom_line(mapping = aes(y = table_quant_p13$'75%_ch',x = table_quant_p13$Jahr,
+                          color = "75th"), 
+            size = 1) +
+  geom_line(mapping = aes(y = table_quant_p13$'90%_ch',x = table_quant_p13$Jahr,
+                          color = "90th"), 
+            size = 1.2) +
+  geom_line(mapping = aes(y = table_quant_p13$'Mean_ch',x = table_quant_p13$Jahr,
+                          color = "Mean"), 
+            size = 1.2) +
+  scale_color_manual(values = 
+                       c('10th' = 'red', 
+                         '25th' = 'blue', 
+                         'Median' = 'green2',
+                         '75th' = 'pink',
+                         '90th' = 'yellow4',
+                         'Mean' = 'black')) +
+  labs(color = '', x = "Year", y = "Income in EUR", 
+       title = "Income Quantiles; Percentage change",
+       subtitle = "equal sharing of resources within household", 
+       caption = 'Source: EU-SILC') +
+  theme_linedraw()  + scale_x_continuous(breaks = brks)
+quant_ch_plot_p13
 
 
 
