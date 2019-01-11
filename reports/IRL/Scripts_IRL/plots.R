@@ -33,7 +33,7 @@ mean_plot_p1 <- ggplot() +
   labs(color = '', x = "Year", y = "Income in EUR", 
        title = "Mean Income",
        subtitle = "equal sharing of resources within household", 
-       caption = 'Source: EU-SILC') +
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 mean_plot_p1
@@ -56,7 +56,7 @@ median_plot_p1 <- ggplot() +
   labs(color = '', x = "Year", y = "Income in EUR", 
        title = "Median Income",
        subtitle = "equal sharing of resources within household", 
-       caption = 'Source: EU-SILC') +
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 median_plot_p1
@@ -78,7 +78,7 @@ gini_plot_p1 <- ggplot() +
   labs(color = '', x = "Year", y = "Gini Index", 
        title = "Gini Index",
        subtitle = "equal sharing of resources within household", 
-       caption = 'Source: EU-SILC') +
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 gini_plot_p1
@@ -98,10 +98,10 @@ p8020_plot_p1 <- ggplot() +
                                              c('Pre-tax factor income' = 'red', 
                                                'Pre-tax national income' = 'darkblue', 
                                                'Post-tax disposable income' = 'darkgreen')) +
-  labs(color = '', x = "Year", y = "P80/P20 ratio", 
+  labs(color = '', x = "Year", y = "ratio", 
        title = "P80/P20 ratio",
        subtitle = "equal sharing of resources within household", 
-       caption = 'Source: EU-SILC') +
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 p8020_plot_p1
@@ -121,10 +121,10 @@ top10_plot_p1 <- ggplot() +
                                              c('Pre-tax factor income' = 'red', 
                                                'Pre-tax national income' = 'darkblue', 
                                                'Post-tax disposable income' = 'darkgreen')) +
-  labs(color = '', x = "Year", y = "share of top decile", 
-       title = "Income share of Top 10%",
+  labs(color = '', x = "Year", y = "income share in %", 
+       title = "Income share of Top Decile",
        subtitle = "equal sharing of resources within household", 
-       caption = 'Source: EU-SILC') +
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 top10_plot_p1
@@ -148,8 +148,8 @@ mean_plot_p2 <- ggplot() +
                                                'Post-tax disposable income' = 'darkgreen')) +
   labs(color = '', x = "Year", y = "Income in EUR", 
        title = "Mean Income",
-       subtitle = "partial sharing of resources, age >= 20 ", 
-       caption = 'Source: EU-SILC') +
+       subtitle = "partial sharing of resources", 
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 mean_plot_p2
@@ -171,11 +171,12 @@ median_plot_p2 <- ggplot() +
                                                'Post-tax disposable income' = 'darkgreen')) +
   labs(color = '', x = "Year", y = "Income in EUR", 
        title = "Median Income",
-       subtitle = "partial sharing of resources, age >= 20 ", 
-       caption = 'Source: EU-SILC') +
+       subtitle = "partial sharing of resources", 
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 median_plot_p2
+# ggarrange(mean_plot_p2, median_plot_p2, common.legend = T)
 
 ######## Plot Gini Wid #################
 
@@ -193,8 +194,8 @@ gini_plot_p2 <- ggplot() +
                                                'Post-tax disposable income' = 'darkgreen')) +
   labs(color = '', x = "Year", y = "Gini Index", 
        title = "Gini Index",
-       subtitle = "partial sharing of resources, age >= 20 ", 
-       caption = 'Source: EU-SILC') +
+       subtitle = "partial sharing of resources", 
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 gini_plot_p2
@@ -214,10 +215,10 @@ p8020_plot_p2 <- ggplot() +
                                              c('Pre-tax factor income' = 'red', 
                                                'Pre-tax national income' = 'darkblue', 
                                                'Post-tax disposable income' = 'darkgreen')) +
-  labs(color = '', x = "Year", y = "P80/P20 ratio", 
+  labs(color = '', x = "Year", y = "ratio", 
        title = "P80/P20 ratio",
-       subtitle = "partial sharing of resources, age >= 20 ", 
-       caption = 'Source: EU-SILC') +
+       subtitle = "partial sharing of resources", 
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 p8020_plot_p2
@@ -237,10 +238,10 @@ top10_plot_p2 <- ggplot() +
                                              c('Pre-tax factor income' = 'red', 
                                                'Pre-tax national income' = 'darkblue', 
                                                'Post-tax disposable income' = 'darkgreen')) +
-  labs(color = '', x = "Year", y = "share of top decile", 
-       title = "Income share of Top 10%",
-       subtitle = "partial sharing of resources, age >= 20 ", 
-       caption = 'Source: EU-SILC') +
+  labs(color = '', x = "Year", y = "income share in %", 
+       title = "Income share of Top Decile",
+       subtitle = "partial sharing of resources", 
+       caption = 'Source: Authors\' analysis (EU-SILC)') +
   theme_linedraw() + scale_x_continuous(breaks = brks) +
   theme(legend.position="bottom")
 top10_plot_p2
@@ -280,6 +281,37 @@ gini_barplot_p1 <- ggplot(gini, aes(x=Year, y=value, fill=variable)) +
   
 
 
+
  
 
+library(ineq)
 
+income_p2_04 <- silc.rph2 %>% select('income_p21', 'income_p22', 'income_p23') %>%
+  filter(rb010=='2004')
+
+lc <- ggplot() +
+  geom_line(mapping = aes(y = indicators_p21$Top10., x = indicators_p21$Jahr,
+                          color = "Pre-tax factor income"),
+            size = 1 ) +
+  geom_line(mapping = aes(y = indicators_p22$Top10.,x = indicators_p22$Jahr,
+                          color = "Pre-tax national income"), size = 1) +
+  geom_line(mapping = aes(y = indicators_p23$Top10.,x = indicators_p23$Jahr,
+                          color = "Post-tax disposable income"), 
+            size = 1) + scale_color_manual(values = 
+                                             c('Pre-tax factor income' = 'red', 
+                                               'Pre-tax national income' = 'darkblue', 
+                                               'Post-tax disposable income' = 'darkgreen')) +
+  labs(color = '', x = "Year", y = "share of top decile", 
+       title = "Income share of Top 10%",
+       subtitle = "partial sharing of resources, age >= 20 ", 
+       caption = 'Source: EU-SILC') +
+  theme_linedraw() + scale_x_continuous(breaks = brks) +
+  theme(legend.position="bottom")
+top10_plot_p2
+
+
+############## plot lorenzcurve p2 ############
+
+plot(Lc(income_p2_04$income_p21), main = '')
+lines(Lc(income_p2_04$income_p22), lty = 2)
+lines(Lc(income_p2_04$income_p23), lty = 3)

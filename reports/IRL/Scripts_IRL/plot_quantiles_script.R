@@ -72,13 +72,15 @@ mean_p23 <- svyby(~income_p23, ~rb010, P2.svy, svymean)
 table_quant_p23 <- data.frame(quant_p23_10$rb010, quant_p23_10$income_p23,
                               quant_p23_25$income_p23, quant_p23_50$income_p23,
                               quant_p23_75$income_p23, quant_p23_90$income_p23,
-                              mean_p23$income_p23)
-colnames(table_quant_p23) <- c('Jahr', '10%', '25%', 'Median', '75%', '90%', 'Mean')
+                              mean_p23$income_p23, table_p23$`P80/P20`)
+colnames(table_quant_p23) <- c('Year', '10th', '25th', 'Median', '75th', '90th',
+                               'Mean', 'P80/P20 ratio')
 write.csv(table_quant_p23, './reports/IRL/tables/table_quantiles_p23.csv')
 table_quant_p23 <- read.csv('./reports/IRL/tables/table_quantiles_p23.csv')
 
 
-
+table_quant_p23 <- table_quantiles_p23
+table_quant_p21 <- table_quantiles_p21
 
 
 quant_plot_p23 <- ggplot() +
@@ -172,6 +174,7 @@ quant_plot_p11 <- ggplot() +
 quant_plot_p11
 
 #### Quantile plot p13; percentage change ######
+library(ggpubr)
 
 table_quant_p13$`10%_ch` <- table_quant_p13$`10%` / table_quant_p13$`10%`[1]*100
 table_quant_p13$`25%_ch` <- table_quant_p13$`25%` / table_quant_p13$`25%`[1]*100
