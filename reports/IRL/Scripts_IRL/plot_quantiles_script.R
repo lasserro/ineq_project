@@ -313,7 +313,7 @@ table_quant_p21 <- data.frame(quant_p21_10$rb010, quant_p21_10$income_p21,
                               mean_p21$income_p21)
 colnames(table_quant_p21) <- c('Jahr', '10%', '25%', 'Median', '75%', '90%', 'Mean')
 #write.csv(table_quant_p21, './reports/IRL/tables/table_quantiles_p21.csv')
-#table_quant_p13 <- read.csv('./reports/IRL/tables/table_quantiles_p13.csv')
+table_quant_p13 <- read.csv('./reports/IRL/tables/table_quantiles_p13.csv')
 
 
 

@@ -2,21 +2,20 @@
 ############################### PLOTS #########################################
 
 ### load tables of indicators
-indicators_p11 <- read.csv('./reports/IRL/tables/table_p11.csv')
-indicators_p12 <- read.csv('./reports/IRL/tables/table_p12.csv')
-indicators_p13 <- read.csv('./reports/IRL/tables/table_p13.csv')
+indicators_p11 <- read.csv('./reports/IRL/tables/final/table_p11.csv')
+indicators_p12 <- read.csv('./reports/IRL/tables/final/table_p12.csv')
+indicators_p13 <- read.csv('./reports/IRL/tables/final/table_p13.csv')
 
-indicators_p21 <- read.csv('./reports/IRL/tables/table_p21.csv')
-indicators_p22 <- read.csv('./reports/IRL/tables/table_p22.csv')
-indicators_p23 <- read.csv('./reports/IRL/tables/table_p23.csv')
+indicators_p21 <- read.csv('./reports/IRL/tables/final/table_p21.csv')
+indicators_p22 <- read.csv('./reports/IRL/tables/final/table_p22.csv')
+indicators_p23 <- read.csv('./reports/IRL/tables/final/table_p23.csv')
 
-yunempl_0416 <- read.csv( './reports/IRL/tables/youth_unemployment_0416.csv')
+# yunempl_0416 <- read.csv( './reports/IRL/tables/youth_unemployment_0416.csv')
 
 
-
-######## Plot mean income Eurostat #################
-
+setwd('./reports/IRL/img/final')
 brks <- seq(2004, 2016, 2)
+######## Plot mean income Eurostat #################
 
 mean_plot_p1 <- ggplot() +
   geom_line(mapping = aes(y = indicators_p11$Mittelwert, x = indicators_p11$Jahr,
@@ -249,69 +248,69 @@ top10_plot_p2
 
 ################# Plot youth unemployment #####################################
 
-yunemployment_plot <- ggplot() + 
-  geom_line(mapping = aes(x = yunempl_0416$time, y = yunempl_0416$values, 
-                          color = 'darkred'), size = 1) + theme_linedraw() +
-  labs(color = '', x = 'Year', y = 'Youth unemployment in %',
-       title = 'Youth-unemployment in %', 
-       subtitle = 'aged 15 - 24 as a percentage of the labour force of the same age',
-       caption = 'Source: Eurostat Database') +
-  theme(legend.position = 'none')
+# yunemployment_plot <- ggplot() + 
+  # geom_line(mapping = aes(x = yunempl_0416$time, y = yunempl_0416$values, 
+  #                         color = 'darkred'), size = 1) + theme_linedraw() +
+  # labs(color = '', x = 'Year', y = 'Youth unemployment in %',
+  #      title = 'Youth-unemployment in %', 
+  #      subtitle = 'aged 15 - 24 as a percentage of the labour force of the same age',
+  #      caption = 'Source: Eurostat Database') +
+  # theme(legend.position = 'none')
 
 
 ############################## plot gini barplot ##########################
-library(reshape2)
-gini <- data.frame(seq(2004,2016,1),indicators_p11$Gini, indicators_p12$Gini, indicators_p13$Gini)
-colnames(gini) <- c('Year', 'Pre-tax factor income', 'Pre-tax national income', 'Post-tax disposable income')
-gini$Year <- as.factor(gini$Year)
-gini <- melt(gini)
-
-gini_barplot_p1 <- ggplot(gini, aes(x=Year, y=value, fill=variable)) + 
-  geom_bar (stat="identity", position ='dodge', width = 0.8) +
-  theme_linedraw() + coord_cartesian(ylim=c(0.2,0.48)) + 
-  scale_fill_manual(values = 
-                    c('Pre-tax factor income' = 'red4', 
-                      'Pre-tax national income' = 'blue', 
-                      'Post-tax disposable income' = 'green4')) +
-  labs( x = 'Year', y = 'Gini-indizes',
-       title = 'Gini index',
-       subtitle = 'equal sharing of resources within household',
-       caption = 'Source: EU-SILC') +
-  theme(legend.position="bottom", legend.title = element_blank())
+# library(reshape2)
+# gini <- data.frame(seq(2004,2016,1),indicators_p11$Gini, indicators_p12$Gini, indicators_p13$Gini)
+# colnames(gini) <- c('Year', 'Pre-tax factor income', 'Pre-tax national income', 'Post-tax disposable income')
+# gini$Year <- as.factor(gini$Year)
+# gini <- melt(gini)
+# 
+# gini_barplot_p1 <- ggplot(gini, aes(x=Year, y=value, fill=variable)) + 
+#   geom_bar (stat="identity", position ='dodge', width = 0.8) +
+#   theme_linedraw() + coord_cartesian(ylim=c(0.2,0.48)) + 
+#   scale_fill_manual(values = 
+#                     c('Pre-tax factor income' = 'red4', 
+#                       'Pre-tax national income' = 'blue', 
+#                       'Post-tax disposable income' = 'green4')) +
+#   labs( x = 'Year', y = 'Gini-indizes',
+#        title = 'Gini index',
+#        subtitle = 'equal sharing of resources within household',
+#        caption = 'Source: EU-SILC') +
+#   theme(legend.position="bottom", legend.title = element_blank())
   
 
 
 
  
 
-library(ineq)
-
-income_p2_04 <- silc.rph2 %>% select('income_p21', 'income_p22', 'income_p23') %>%
-  filter(rb010=='2004')
-
-lc <- ggplot() +
-  geom_line(mapping = aes(y = indicators_p21$Top10., x = indicators_p21$Jahr,
-                          color = "Pre-tax factor income"),
-            size = 1 ) +
-  geom_line(mapping = aes(y = indicators_p22$Top10.,x = indicators_p22$Jahr,
-                          color = "Pre-tax national income"), size = 1) +
-  geom_line(mapping = aes(y = indicators_p23$Top10.,x = indicators_p23$Jahr,
-                          color = "Post-tax disposable income"), 
-            size = 1) + scale_color_manual(values = 
-                                             c('Pre-tax factor income' = 'red', 
-                                               'Pre-tax national income' = 'darkblue', 
-                                               'Post-tax disposable income' = 'darkgreen')) +
-  labs(color = '', x = "Year", y = "share of top decile", 
-       title = "Income share of Top 10%",
-       subtitle = "partial sharing of resources, age >= 20 ", 
-       caption = 'Source: EU-SILC') +
-  theme_linedraw() + scale_x_continuous(breaks = brks) +
-  theme(legend.position="bottom")
-top10_plot_p2
+# library(ineq)
+# 
+# income_p2_04 <- silc.rph2 %>% select('income_p21', 'income_p22', 'income_p23') %>%
+#   filter(rb010=='2004')
+# 
+# lc <- ggplot() +
+#   geom_line(mapping = aes(y = indicators_p21$Top10., x = indicators_p21$Jahr,
+#                           color = "Pre-tax factor income"),
+#             size = 1 ) +
+#   geom_line(mapping = aes(y = indicators_p22$Top10.,x = indicators_p22$Jahr,
+#                           color = "Pre-tax national income"), size = 1) +
+#   geom_line(mapping = aes(y = indicators_p23$Top10.,x = indicators_p23$Jahr,
+#                           color = "Post-tax disposable income"), 
+#             size = 1) + scale_color_manual(values = 
+#                                              c('Pre-tax factor income' = 'red', 
+#                                                'Pre-tax national income' = 'darkblue', 
+#                                                'Post-tax disposable income' = 'darkgreen')) +
+#   labs(color = '', x = "Year", y = "share of top decile", 
+#        title = "Income share of Top 10%",
+#        subtitle = "partial sharing of resources, age >= 20 ", 
+#        caption = 'Source: EU-SILC') +
+#   theme_linedraw() + scale_x_continuous(breaks = brks) +
+#   theme(legend.position="bottom")
+# top10_plot_p2
 
 
 ############## plot lorenzcurve p2 ############
-
-plot(Lc(income_p2_04$income_p21), main = '')
-lines(Lc(income_p2_04$income_p22), lty = 2)
-lines(Lc(income_p2_04$income_p23), lty = 3)
+# 
+# plot(Lc(income_p2_04$income_p21), main = '')
+# lines(Lc(income_p2_04$income_p22), lty = 2)
+# lines(Lc(income_p2_04$income_p23), lty = 3)

@@ -9,32 +9,28 @@ library(ggpubr)
 library(reshape2)
 
 
+rm(list= ls()[!(ls() %in% c('P1.svy', 'P2.svy', 'silc.rph', 'silc.rph2'))])
 brks <- seq(2004, 2016, 2)
+setwd("~/Dokumente/University/Volkswirtschaft/Master/WS2018/Verteilung/Ireland Project/ineq_project")
 
+table_quant_p11 <- read.csv('./reports/IRL/tables/final/table_quantiles_p11.csv')
+table_quant_p12 <- read.csv('./reports/IRL/tables/final/table_quantiles_p12.csv')
+table_quant_p13 <- read.csv('./reports/IRL/tables/final/table_quantiles_p13.csv')
+
+colnames(table_quant_p11) <- c('X', 'Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
+colnames(table_quant_p12) <- c('X', 'Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
+colnames(table_quant_p13) <- c('X', 'Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
+
+table_quant_p21 <- read.csv('./reports/IRL/tables/final/table_quantiles_p21.csv')
+table_quant_p22 <- read.csv('./reports/IRL/tables/final/table_quantiles_p22.csv')
+table_quant_p23 <- read.csv('./reports/IRL/tables/final/table_quantiles_p23.csv')
+
+colnames(table_quant_p21) <- c('X', 'Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
+colnames(table_quant_p22) <- c('X', 'Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
+colnames(table_quant_p23) <- c('X', 'Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
+
+setwd('./reports/IRL/tables/final')
 #### Quantile plot p21; percentage change ######
-
-
-quant_p21_10 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.1, ci=T)
-quant_p21_25 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.25, ci=T)
-quant_p21_50 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.5, ci=T)
-quant_p21_75 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.75, ci=T)
-quant_p21_90 <- svyby(~income_p21, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.9, ci=T)
-mean_p21 <- svyby(~income_p21, ~rb010, P2.svy, svymean)
-
-table_quant_p21 <- data.frame(quant_p21_10$rb010, quant_p21_10$income_p21,
-                              quant_p21_25$income_p21, quant_p21_50$income_p21,
-                              quant_p21_75$income_p21, quant_p21_90$income_p21,
-                              mean_p21$income_p21)
-colnames(table_quant_p21) <- c('Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
-write.csv(table_quant_p21, './reports/IRL/tables/table_quant_p21.csv')
-# table_quant_p21 <- read.csv('./reports/IRL/tables/table_quantiles_p21.csv')
-# rm(quant_p21_10, quant_p21_25, quant_p21_50, quant_p21_75, quant_p21_90, mean_p21)
-
 
 table_quant_p21$`10th_ch` <- table_quant_p21$`10th` / table_quant_p21$`10th`[1]
 table_quant_p21$`25th_ch` <- table_quant_p21$`25th` / table_quant_p21$`25th`[1]
@@ -42,8 +38,6 @@ table_quant_p21$`Median_ch` <- table_quant_p21$`Median` / table_quant_p21$`Media
 table_quant_p21$`75th_ch` <- table_quant_p21$`75th` / table_quant_p21$`75th`[1]
 table_quant_p21$`90th_ch` <- table_quant_p21$`90th` / table_quant_p21$`90th`[1]
 table_quant_p21$`Mean_ch` <- table_quant_p21$`Mean` / table_quant_p21$`Mean`[1]
-write.csv(table_quant_p21, './reports/IRL/tables/table_quant_p21.csv')
-
 
 quant_ch_plot_p21 <- ggplot() +
   geom_line(mapping = aes(y = table_quant_p21$'10th_ch', x = table_quant_p21$Year,
@@ -79,29 +73,6 @@ quant_ch_plot_p21 <- ggplot() +
 quant_ch_plot_p21
 
 #### Quantile plot p23; percentage change ######
-
-
-quant_p23_10 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.1, ci=T)
-quant_p23_25 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.25, ci=T)
-quant_p23_50 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.5, ci=T)
-quant_p23_75 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.75, ci=T)
-quant_p23_90 <- svyby(~income_p23, ~rb010, P2.svy, svyquantile, 
-                      quantile = 0.9, ci=T)
-mean_p23 <- svyby(~income_p23, ~rb010, P2.svy, svymean)
-
-table_quant_p23 <- data.frame(quant_p23_10$rb010, quant_p23_10$income_p23,
-                              quant_p23_25$income_p23, quant_p23_50$income_p23,
-                              quant_p23_75$income_p23, quant_p23_90$income_p23,
-                              mean_p23$income_p23)
-colnames(table_quant_p23) <- c('Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
-write.csv(table_quant_p23, './reports/IRL/tables/table_quant_p23.csv')
-# table_quant_p23 <- read.csv('./reports/IRL/tables/table_quantiles_p23.csv')
-# rm(quant_p23_10, quant_p23_25, quant_p23_50, quant_p23_75, quant_p23_90, mean_p23)
-
 
 table_quant_p23$`10th_ch` <- table_quant_p23$`10th` / table_quant_p23$`10th`[1]
 table_quant_p23$`25th_ch` <- table_quant_p23$`25th` / table_quant_p23$`25th`[1]
@@ -148,29 +119,6 @@ ggarrange(quant_ch_plot_p21, quant_ch_plot_p23, common.legend = T, legend = 'bot
 
 #### Quantile plot p11; percentage change ######
 
-
-quant_p11_10 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.1, ci=T)
-quant_p11_25 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.25, ci=T)
-quant_p11_50 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.5, ci=T)
-quant_p11_75 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.75, ci=T)
-quant_p11_90 <- svyby(~income_p11, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.9, ci=T)
-mean_p11 <- svyby(~income_p11, ~rb010, P1.svy, svymean)
-
-table_quant_p11 <- data.frame(quant_p11_10$rb010, quant_p11_10$income_p11,
-                              quant_p11_25$income_p11, quant_p11_50$income_p11,
-                              quant_p11_75$income_p11, quant_p11_90$income_p11,
-                              mean_p11$income_p11)
-colnames(table_quant_p11) <- c('Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
-write.csv(table_quant_p11, './reports/IRL/tables/table_quant_p11.csv')
-# table_quant_p11 <- read.csv('./reports/IRL/tables/table_quantiles_p11.csv')
- rm(quant_p11_10, quant_p11_25, quant_p11_50, quant_p11_75, quant_p11_90, mean_p11)
-
-
 table_quant_p11$`10th_ch` <- table_quant_p11$`10th` / table_quant_p11$`10th`[1]
 table_quant_p11$`25th_ch` <- table_quant_p11$`25th` / table_quant_p11$`25th`[1]
 table_quant_p11$`Median_ch` <- table_quant_p11$`Median` / table_quant_p11$`Median`[1]
@@ -214,29 +162,6 @@ quant_ch_plot_p11 <- ggplot() +
 quant_ch_plot_p11
 
 #### Quantile plot p13; percentage change ######
-
-
-quant_p13_10 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.1, ci=T)
-quant_p13_25 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.25, ci=T)
-quant_p13_50 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.5, ci=T)
-quant_p13_75 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.75, ci=T)
-quant_p13_90 <- svyby(~income_p13, ~rb010, P1.svy, svyquantile, 
-                      quantile = 0.9, ci=T)
-mean_p13 <- svyby(~income_p13, ~rb010, P1.svy, svymean)
-
-table_quant_p13 <- data.frame(quant_p13_10$rb010, quant_p13_10$income_p13,
-                              quant_p13_25$income_p13, quant_p13_50$income_p13,
-                              quant_p13_75$income_p13, quant_p13_90$income_p13,
-                              mean_p13$income_p13)
-colnames(table_quant_p13) <- c('Year', '10th', '25th', 'Median', '75th', '90th', 'Mean')
-write.csv(table_quant_p13, './reports/IRL/tables/table_quant_p13.csv')
-# table_quant_p13 <- read.csv('./reports/IRL/tables/table_quantiles_p13.csv')
-rm(quant_p13_10, quant_p13_25, quant_p13_50, quant_p13_75, quant_p13_90, mean_p13)
-
 
 table_quant_p13$`10th_ch` <- table_quant_p13$`10th` / table_quant_p13$`10th`[1]
 table_quant_p13$`25th_ch` <- table_quant_p13$`25th` / table_quant_p13$`25th`[1]
