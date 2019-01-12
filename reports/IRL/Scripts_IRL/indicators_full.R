@@ -47,6 +47,8 @@ median_p11$income_p11 <-  median_p11$income_p11
 
 gini_p11 <- svyby(~income_p11, ~rb010, P1.svy, svygini)
 p8020_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyqsr)
+p9010_p11 <- svyby(~income_p11, ~rb010, P1.svy, svyqsr, alpha1=0.1)
+
 
 top10_svy_p11 <- subset(P1.svy, income_p11 >= as.numeric(
   svyquantile(~income_p11, P1.svy, quantile=c(0.9))))
@@ -55,8 +57,10 @@ top10den_p11 <- svyby(~income_p11, ~rb010, P1.svy, svytotal)
 top10_p11 <- top10num_p11 / top10den_p11
 
 table_p11 <- data.frame(mean_p11$rb010, mean_p11$income_p11, median_p11$income_p11,
-                        gini_p11$income_p11, p8020_p11$income_p11, top10_p11$income_p11)
-colnames(table_p11) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
+                        gini_p11$income_p11, p8020_p11$income_p11, top10_p11$income_p11,
+                        p9010_p11$income_p11)
+colnames(table_p11) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%',
+                         'P90/P10')
 write.csv(table_p11, './reports/IRL/tables/final/table_p11.csv')
 ### 2.2 pre-tax national income
 
@@ -69,6 +73,7 @@ median_p12$income_p12 <-  median_p12$income_p12
 
 gini_p12 <- svyby(~income_p12, ~rb010, P1.svy, svygini)
 p8020_p12 <- svyby(~income_p12, ~rb010, P1.svy, svyqsr)
+p9010_p12 <- svyby(~income_p12, ~rb010, P1.svy, svyqsr, alpha1=0.1)
 
 top10_svy_p12 <- subset(P1.svy, income_p12 >= as.numeric(
   svyquantile(~income_p12, P1.svy, quantile=c(0.9))))
@@ -77,8 +82,10 @@ top10den_p12 <- svyby(~income_p12, ~rb010, P1.svy, svytotal)
 top10_p12 <- top10num_p12 / top10den_p12
 
 table_p12 <- data.frame(mean_p12$rb010, mean_p12$income_p12, median_p12$income_p12,
-                        gini_p12$income_p12, p8020_p12$income_p12, top10_p12$income_p12)
-colnames(table_p12) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
+                        gini_p12$income_p12, p8020_p12$income_p12, top10_p12$income_p12,
+                        p9010_p12$income_p12)
+colnames(table_p12) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%',
+                         'P90/P10')
 write.csv(table_p12, './reports/IRL/tables/final/table_p12.csv')
 
 ### 2.3 post-tax disposable income
@@ -92,6 +99,7 @@ median_p13$income_p13 <-  median_p13$income_p13
 
 gini_p13 <- svyby(~income_p13, ~rb010, P1.svy, svygini)
 p8020_p13 <- svyby(~income_p13, ~rb010, P1.svy, svyqsr)
+p9010_p13 <- svyby(~income_p13, ~rb010, P1.svy, svyqsr, alpha1=0.1)
 
 top10_svy_p13 <- subset(P1.svy, income_p13 >= as.numeric(
   svyquantile(~income_p13, P1.svy, quantile=c(0.9))))
@@ -100,8 +108,10 @@ top10den_p13 <- svyby(~income_p13, ~rb010, P1.svy, svytotal)
 top10_p13 <- top10num_p13 / top10den_p13
 
 table_p13 <- data.frame(mean_p13$rb010, mean_p13$income_p13, median_p13$income_p13,
-                        gini_p13$income_p13, p8020_p13$income_p13, top10_p13$income_p13)
-colnames(table_p13) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
+                        gini_p13$income_p13, p8020_p13$income_p13, top10_p13$income_p13,
+                        p9010_p13$income_p13)
+colnames(table_p13) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%',
+                         'P90/P10')
 write.csv(table_p13, './reports/IRL/tables/final/table_p13.csv')
 
 ################################################################################
@@ -118,6 +128,7 @@ median_p21$income_p21 <-  median_p21$income_p21
 
 gini_p21 <- svyby(~income_p21, ~rb010, P2.svy, svygini)
 p8020_p21 <- svyby(~income_p21, ~rb010, P2.svy, svyqsr)
+p9010_p21 <- svyby(~income_p21, ~rb010, P2.svy, svyqsr, alpha1=0.1)
 
 top10_svy_p21 <- subset(P2.svy, income_p21 >= as.numeric(
   svyquantile(~income_p21, P2.svy, quantile=c(0.9))))
@@ -126,8 +137,10 @@ top10den_p21 <- svyby(~income_p21, ~rb010, P2.svy, svytotal)
 top10_p21 <- top10num_p21 / top10den_p21
 
 table_p21 <- data.frame(mean_p21$rb010, mean_p21$income_p21, median_p21$income_p21,
-                        gini_p21$income_p21, p8020_p21$income_p21, top10_p21$income_p21)
-colnames(table_p21) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
+                        gini_p21$income_p21, p8020_p21$income_p21, top10_p21$income_p21,
+                        p9010_p21$income_p21)
+colnames(table_p21) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%',
+                         'P90/P10')
 write.csv(table_p21, './reports/IRL/tables/final/table_p21.csv')
 
 ### 3.2 pre-tax national income
@@ -141,6 +154,8 @@ median_p22$income_p22 <-  median_p22$income_p22
 
 gini_p22 <- svyby(~income_p22, ~rb010, P2.svy, svygini)
 p8020_p22 <- svyby(~income_p22, ~rb010, P2.svy, svyqsr)
+p9010_p22 <- svyby(~income_p22, ~rb010, P2.svy, svyqsr, alpha1=0.1)
+
 
 top10_svy_p22 <- subset(P2.svy, income_p22 >= as.numeric(
   svyquantile(~income_p22, P2.svy, quantile=c(0.9))))
@@ -149,8 +164,10 @@ top10den_p22 <- svyby(~income_p22, ~rb010, P2.svy, svytotal)
 top10_p22 <- top10num_p22 / top10den_p22
 
 table_p22 <- data.frame(mean_p22$rb010, mean_p22$income_p22, median_p22$income_p22,
-                        gini_p22$income_p22, p8020_p22$income_p22, top10_p22$income_p22)
-colnames(table_p22) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
+                        gini_p22$income_p22, p8020_p22$income_p22, top10_p22$income_p22,
+                        p9010_p22$income_p22)
+colnames(table_p22) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%',
+                         'P90/P10')
 write.csv(table_p22, './reports/IRL/tables/final/table_p22.csv')
 
 ### 3.3 post-tax dispo income
@@ -164,6 +181,8 @@ median_p23$income_p23 <-  median_p23$income_p23
 
 gini_p23 <- svyby(~income_p23, ~rb010, P2.svy, svygini)
 p8020_p23 <- svyby(~income_p23, ~rb010, P2.svy, svyqsr)
+p9010_p23 <- svyby(~income_p23, ~rb010, P2.svy, svyqsr, alpha1=0.1)
+
 
 top10_svy_p23 <- subset(P2.svy, income_p23 >= as.numeric(
   svyquantile(~income_p23, P2.svy, quantile=c(0.9))))
@@ -172,8 +191,10 @@ top10den_p23 <- svyby(~income_p23, ~rb010, P2.svy, svytotal)
 top10_p23 <- top10num_p23 / top10den_p23
 
 table_p23 <- data.frame(mean_p23$rb010, mean_p23$income_p23, median_p23$income_p23,
-                        gini_p23$income_p23, p8020_p23$income_p23, top10_p23$income_p23)
-colnames(table_p23) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%')
+                        gini_p23$income_p23, p8020_p23$income_p23, top10_p23$income_p23,
+                        p9010_p23$income_p23)
+colnames(table_p23) <- c('Jahr', 'Mittelwert', 'Median', 'Gini', 'P80/P20', 'Top10%',
+                         'P90/P10')
 write.csv(table_p23, './reports/IRL/tables/final/table_p23.csv')
 
 
